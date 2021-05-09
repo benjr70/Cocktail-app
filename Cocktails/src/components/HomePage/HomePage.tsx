@@ -1,6 +1,8 @@
 import React from 'react';
 import { SearchBar } from '../searchBar/SearchBar';
 import { CocktailCard } from '../CocktailCard/CocktailCard';
+import { CocktailAPI } from '../../services/CocktailAPI';
+import { Cocktail } from '../../services/CocktailAPI';
 
 export class HomePage extends React.Component{
     constructor(props: any) {
@@ -11,15 +13,14 @@ export class HomePage extends React.Component{
 
         this.updateInput = this.updateInput.bind(this);
     }
-
-    testarray: string[] = ['test', 'test2', 'test3'];
-    filteredList: string[] = [];
+    cocktailAPI = new CocktailAPI;
+    filteredList: Cocktail[] = [];
     updateInput(e: React.ChangeEvent<HTMLInputElement>) {
         console.log(e.target.value)
-        this.filteredList = this.testarray.filter(cocktail =>  {
-           return cocktail.includes(e.target.value) ? cocktail: null;
+        this.filteredList = this.cocktailAPI.getCocktailbyName(e.target.value).filter((cocktail: Cocktail)  =>  {
+           return cocktail.drinkName.toLowerCase().includes(e.target.value.toLowerCase()) ? cocktail: null;
         });
-        console.log(this.testarray);
+        console.log(this.filteredList);
         this.setState({input: e.target.value});
     }
  

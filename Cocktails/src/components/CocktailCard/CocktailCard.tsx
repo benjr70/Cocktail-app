@@ -1,9 +1,11 @@
+import { Cocktail } from "../../services/CocktailAPI"
+
 
 export function CocktailCard(props: any){
     return (<div>
-        {props.Cocktaillist.map((cocktail: string) =>{
+        {props.Cocktaillist.map((cocktail: Cocktail) =>{
             return (
-            <h2>{cocktail}</h2>
+            <h2>{cocktail.drinkName}</h2>
             )
         })}
     </div>
