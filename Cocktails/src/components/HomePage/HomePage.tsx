@@ -3,7 +3,6 @@ import { SearchBar } from '../searchBar/SearchBar';
 import { CocktailCard } from '../CocktailCard/CocktailCard';
 import { CocktailAPI } from '../../services/CocktailAPI';
 import { Cocktail } from '../../services/CocktailAPI';
-import { map } from 'rxjs/operators';
 
 export class HomePage extends React.Component{
     constructor(props: any) {
@@ -18,7 +17,7 @@ export class HomePage extends React.Component{
     filteredList: Cocktail[] = [];
     updateInput(e: React.ChangeEvent<HTMLInputElement>) {
         console.log(e.target.value)
-        this.cocktailAPI.getCocktailbyName(e.target.value).subscribe(cocktails => {
+        this.cocktailAPI.getCocktailbyName(e.target.value).then(cocktails => {
             this.filteredList = cocktails.filter((cocktail: Cocktail) => {
                 if (e.target.value === '') {
                     return null;
@@ -37,7 +36,7 @@ export class HomePage extends React.Component{
     render(){
         return(
             <>
-                <h1> CockTails </h1>
+                <h1> Cocktails </h1>
                 <SearchBar
                 onChange={this.updateInput}
                 />
