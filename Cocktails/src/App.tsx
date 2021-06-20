@@ -1,8 +1,5 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { HomePage } from './components/HomePage/HomePage';
-import { homedir } from 'os';
 
 function App() {
   return (

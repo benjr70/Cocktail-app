@@ -3,6 +3,7 @@ import { SearchBar } from '../searchBar/SearchBar';
 import { CocktailCard } from '../CocktailCard/CocktailCard';
 import { CocktailAPI } from '../../services/CocktailAPI';
 import { Cocktail } from '../../services/CocktailAPI';
+import { map } from 'rxjs/operators';
 
 export class HomePage extends React.Component{
     constructor(props: any) {
@@ -13,14 +14,20 @@ export class HomePage extends React.Component{
 
         this.updateInput = this.updateInput.bind(this);
     }
-    cocktailAPI = new CocktailAPI;
+    cocktailAPI = new CocktailAPI();
     filteredList: Cocktail[] = [];
     updateInput(e: React.ChangeEvent<HTMLInputElement>) {
         console.log(e.target.value)
-        this.filteredList = this.cocktailAPI.getCocktailbyName(e.target.value).filter((cocktail: Cocktail)  =>  {
-           return cocktail.drinkName.toLowerCase().includes(e.target.value.toLowerCase()) ? cocktail: null;
-        });
-        console.log(this.filteredList);
+        this.cocktailAPI.getCocktailbyName(e.target.value).subscribe(cocktails => {
+            this.filteredList = cocktails.filter((cocktail: Cocktail) => {
+                if (e.target.value === '') {
+                    return null;
+                } else {
+                    return cocktail.drinkName.toLowerCase().includes(e.target.value.toLowerCase()) ? cocktail: null;
+                }
+            } )
+            console.log(this.filteredList);
+        })
         this.setState({input: e.target.value});
     }
  
