@@ -15,9 +15,9 @@ export class HomePage extends React.Component{
     }
     cocktailAPI = new CocktailAPI();
     filteredList: Cocktail[] = [];
-    updateInput(e: React.ChangeEvent<HTMLInputElement>) {
+    async updateInput(e: React.ChangeEvent<HTMLInputElement>) {
         console.log(e.target.value)
-        this.cocktailAPI.getCocktailbyName(e.target.value).then(cocktails => {
+        await this.cocktailAPI.getCocktailbyName(e.target.value).then(cocktails => {
             this.filteredList = cocktails.filter((cocktail: Cocktail) => {
                 if (e.target.value === '') {
                     return null;
